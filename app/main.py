@@ -35,13 +35,13 @@ async def main() -> None:
 
     # run wake-up program: turn on light and speaker in parallel, then play the song
     await run_parallel(
-            service.send_msg(Message(hue_light_id, MessageType.SWITCH_ON)),
-            service.send_msg(Message(speaker_id, MessageType.SWITCH_ON))
+            service.send_message(Message(hue_light_id, MessageType.SWITCH_ON)),
+            service.send_message(Message(speaker_id, MessageType.SWITCH_ON))
         )
 
     # Play song after both light and speaker are on
     await run_sequence(
-        service.send_msg(
+        service.send_message(
             Message(
                 speaker_id,
                 MessageType.PLAY_SONG,
@@ -51,15 +51,16 @@ async def main() -> None:
     )
 
     await run_parallel(
-        service.send_msg(Message(hue_light_id, MessageType.SWITCH_OFF)),
-        service.send_msg(Message(speaker_id, MessageType.SWITCH_OFF))
+        service.send_message(Message(hue_light_id, MessageType.SWITCH_OFF)),
+        service.send_message(Message(speaker_id, MessageType.SWITCH_OFF))
     )
 
     await run_sequence(
-        service.send_msg(Message(toilet_id, MessageType.FLUSH)),
-        service.send_msg(Message(toilet_id, MessageType.CLEAN))
+        service.send_message(Message(toilet_id, MessageType.FLUSH)),
+        service.send_message(Message(toilet_id, MessageType.CLEAN))
     )
 
+if __name__ == "__main__":
     start = time.perf_counter()
     asyncio.run(main())
     end = time.perf_counter()

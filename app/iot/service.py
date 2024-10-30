@@ -44,7 +44,7 @@ class IOTService:
         print("=====RUNNING PROGRAM======")
 
         # Create tasks for each message in the program
-        tasks = [self.send_msg(msg) for msg in program]
+        tasks = [self.send_message(msg) for msg in program]
 
         # Run all tasks simultaneously
         await asyncio.gather(*tasks)
@@ -54,5 +54,5 @@ class IOTService:
 
         print("=====END OF PROGRAM======")
 
-    async def send_msg(self, msg: Message) -> None:
+    async def send_message(self, msg: Message) -> None:
         await self.devices[msg.device_id].send_message(msg.msg_type, msg.data)
